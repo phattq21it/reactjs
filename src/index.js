@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { StoreProvider } from "./store";
 
 import App from "./App";
 
@@ -17,4 +18,8 @@ function emitComment(id) {
 emitComment(1);
 emitComment(2);
 emitComment(3);
-root.render(<App />);
+root.render(
+  <StoreProvider>
+    <App />
+  </StoreProvider>
+);

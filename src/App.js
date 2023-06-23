@@ -1,20 +1,27 @@
-import DemoUCallback from "./DemoUCallback";
-import UseMemoHook from "./UseMemoHook";
-import UseReducerHook from "./UseReducerHook";
-import DemoUseReducer from "./DemoUseReducer";
-import { useState } from "react";
+import { useStore, action } from "./store";
+
 function App() {
-  const [count, setCount] = useState(0);
-  const handleCount = () => {
-    setCount((prev) => prev + 1);
+  const [state, dispath] = useStore();
+  const { todos, todoInput } = state;
+
+  const handleADD = () => {
+    dispath(action.addTodo(todoInput));
   };
+
+  console.log("todoInput:", state);
   return (
     <div style={{ margin: "20px" }}>
-      <DemoUCallback props={handleCount} />
-      <h1>{count}</h1>
-      <UseMemoHook />
-      <UseReducerHook />
-      <DemoUseReducer />
+      <input
+        value={todoInput}
+        placeholder="Enter todo..."
+        onChange={(e) => {
+          dispath(action.setTodoInput(e.target.value));
+        }}
+      />
+      <button onClick={handleADD}>ADD</button>
+      {todos.map((todo, index) => (
+        <li>{todo}</li>
+      ))}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useReducer } from "react";
 //init state
 const initState = {
   job: "",
-  jobs: [],
+  jobss: [],
 };
 //Action
 const SET_JOB = "set_job";
@@ -43,15 +43,15 @@ const reducer = (state, action) => {
     case ADD_JOB:
       newState = {
         ...state,
-        jobs: [...state.jobs, action.payload],
+        jobss: [...state.jobss, action.payload],
       };
       break;
     case DELETE_JOB:
-      const newJobs = [...state.jobs];
+      const newJobs = [...state.jobss];
       newJobs.splice(action.payload, 1);
       newState = {
         ...state,
-        jobs: newJobs,
+        jobss: newJobs,
       };
       break;
     default:
@@ -62,7 +62,7 @@ const reducer = (state, action) => {
 };
 function DemoUseReducer() {
   const [state, dispatch] = useReducer(reducer, initState);
-  const { job, jobs } = state;
+  const { job, jobss } = state;
   const handleSubmit = () => {
     dispatch(addJob(job));
     dispatch(setJob(""));
@@ -79,9 +79,10 @@ function DemoUseReducer() {
       ></input>
       <button onClick={handleSubmit}>Add</button>
       <ul>
-        {jobs.map((job, index) => (
+        {jobss.map((job, index) => (
           <li key={index}>
-            {job} <span onClick={() => dispatch(deleteJob(job))}>&times;</span>
+            {job} {index}
+            <span onClick={() => dispatch(deleteJob(index))}>&times;</span>
           </li>
         ))}
       </ul>
